@@ -1,0 +1,35 @@
+PODS:
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
+  - MBProgressHUD (1.2.0)
+  - ReachabilitySwift (5.0.0)
+  - SwiftAlgorithms (1.0.0)
+  - Toast (4.0.0)
+
+DEPENDENCIES:
+  - Charts (= 4.1.0)
+  - MBProgressHUD (= 1.2.0)
+  - ReachabilitySwift (= 5.0.0)
+  - Toast (= 4.0.0)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - MBProgressHUD
+    - ReachabilitySwift
+    - Toast
+  trunk:
+    - Charts
+    - SwiftAlgorithms
+
+SPEC CHECKSUMS:
+  Charts: ce0768268078eee0336f122c3c4ca248e4e204c5
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+
+PODFILE CHECKSUM: 93e74984d38367810296f56e52f00be2aceec544
+
+COCOAPODS: 1.15.2
