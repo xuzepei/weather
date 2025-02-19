@@ -16,5 +16,5 @@
 ![Alt text](./screenshot/1.png)
 
 
-## Thanks for reviewing.
+## Thank you for reviewing.
 
