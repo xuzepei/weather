@@ -32,7 +32,7 @@ class ViewController: BaseViewController, CLLocationManagerDelegate {
     var weatherTimeDataArray = NSMutableArray()
     var nowIndex:Int = -1
     
-    //Rrefresh timer, refresh the weather data every 5 min
+    //Rrefresh timer, refresh the weather data every 5 mins
     var timer: Timer? = nil
     
     deinit {
@@ -92,7 +92,7 @@ class ViewController: BaseViewController, CLLocationManagerDelegate {
             let delayInSeconds: Double = 1
             let dispatchTime = DispatchTime.now() + delayInSeconds
             DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-                let errorMesg = "Cannot get current location. Need to allow locaction access in Settings."
+                let errorMesg = "Cannot access current location. Please enable location access in Settings."
                 Tool.showAlert("Tip", message: errorMesg, rootVC: self)
             }
 
@@ -125,7 +125,7 @@ class ViewController: BaseViewController, CLLocationManagerDelegate {
         case .notDetermined:
             print("Location: notDetermined")
         case .restricted, .denied:
-            Tool.showAlert("Tip", message: "Cannot get current location. Need to allow locaction access in Settings.", rootVC: self)
+            Tool.showAlert("Tip", message: "Cannot access current location. Please enable location access in Settings.", rootVC: self)
             print("Location: restricted or .denied")
         case .authorizedWhenInUse:
             print("Location: authorizedWhenInUse")
@@ -151,6 +151,8 @@ class ViewController: BaseViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get location: \(error.localizedDescription)")
+        
+        self.isRequestingLocation = false
         
         handleUpdateWeatherFailed()
     }
@@ -194,7 +196,7 @@ class ViewController: BaseViewController, CLLocationManagerDelegate {
         
         if Tool.shared.isNetworkReachable() == false {
             handleUpdateWeatherFailed()
-            Tool.showToast(text: LS("No internet connection."), type: .Error)
+            Tool.showToast(text: LS("No network connection."), type: .Error)
             return
         }
         
@@ -220,7 +222,12 @@ class ViewController: BaseViewController, CLLocationManagerDelegate {
                 if let hourlyData = dict["hourly"] as? Dictionary<String, AnyObject> {
                     self.weatherData = hourlyData
                     handleUpdateWeatherSucceeded()
+                    return
                 }
+            }
+            
+            DispatchQueue.main.async {
+                Tool.showToast(text: LS("Failed to update weather data. Please try again later."), type: .Error)
             }
 
             handleUpdateWeatherFailed()

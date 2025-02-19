@@ -27,6 +27,7 @@
 		090A3EC62D6579B30012DA40 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090A3EAE2D6579B30012DA40 /* ToastView.swift */; };
 		090A3ECF2D65AB600012DA40 /* ChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 090A3ECE2D65AB600012DA40 /* ChartCell.xib */; };
 		090A3ED02D65AB600012DA40 /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090A3ECD2D65AB600012DA40 /* ChartCell.swift */; };
+		090A3ED22D65C9E60012DA40 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 090A3ED12D65C9E60012DA40 /* PrivacyInfo.xcprivacy */; };
 		09AC37232D6574ED001F9422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09AC37142D6574ED001F9422 /* Assets.xcassets */; };
 		09AC37252D6574ED001F9422 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09AC37192D6574ED001F9422 /* LaunchScreen.storyboard */; };
 		09AC37262D6574ED001F9422 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09AC371B2D6574ED001F9422 /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		090A3EB72D6579B30012DA40 /* ToastViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastViewConfiguration.swift; sourceTree = "<group>"; };
 		090A3ECD2D65AB600012DA40 /* ChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCell.swift; sourceTree = "<group>"; };
 		090A3ECE2D65AB600012DA40 /* ChartCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChartCell.xib; sourceTree = "<group>"; };
+		090A3ED12D65C9E60012DA40 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0999ACA32D64BBE000E14EDA /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09AC37132D6574ED001F9422 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09AC37142D6574ED001F9422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		0999AC9A2D64BBE000E14EDA = {
 			isa = PBXGroup;
 			children = (
+				090A3ED12D65C9E60012DA40 /* PrivacyInfo.xcprivacy */,
 				09AC37222D6574ED001F9422 /* Weather */,
 				0999ACA42D64BBE000E14EDA /* Products */,
 				39D5A8004CF5A5BDA5757BCC /* Pods */,
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				090A3EA12D6576A10012DA40 /* ChartViewController.xib in Resources */,
+				090A3ED22D65C9E60012DA40 /* PrivacyInfo.xcprivacy in Resources */,
 				09AC37232D6574ED001F9422 /* Assets.xcassets in Resources */,
 				09AC37252D6574ED001F9422 /* LaunchScreen.storyboard in Resources */,
 				09AC37262D6574ED001F9422 /* Main.storyboard in Resources */,
@@ -385,6 +389,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B883BDMH8Y;
@@ -407,6 +412,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.demo.Weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Weather/Weather-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -422,6 +428,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B883BDMH8Y;
@@ -444,6 +451,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.demo.Weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Weather/Weather-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

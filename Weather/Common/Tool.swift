@@ -81,59 +81,30 @@ func LS(_ key: String) -> String {
         case .none, .unavailable:
             return false
         }
-        
-        return false
     }
     
-    func getRootViewController() -> UIViewController? {
-        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
-           let rootVC = window.rootViewController {
-            return rootVC
+    class func getRootViewController() -> UIViewController? {
+        if let window = Tool.getKeyWindow() {
+            if let rootVC = window.rootViewController {
+                // 在这里使用rootVC
+                return rootVC
+            }
         } else {
+            // 如果没有找到key window，可以使用其他方式来获取根视图控制器
         }
         
         return nil
     }
     
-//    @objc func showHUD(text: String, imageName:String, view: UIView, autoHideAfterDelay: TimeInterval, complete:@escaping ()->Void) {
-//        //let imageView = UIImageView(image: UIImage(named: "tick"))
-//        self.completeBlock = complete
-//        
-//        self.hud = MBProgressHUD.showAdded(to: view, animated: true)
-//        if let hud = self.hud {
-//            hud.mode = .customView
-//            
-//            if imageName == "tick" {
-//                var rect = CGRectMake(0, 0, 45, 30)
-//                if text.count == 0 {
-//                    rect = CGRectMake(0, 0, 45, 45)
-//                }
-//                let tickview = TickView(frame: rect, color: UIColor.tickColor)
-//                tickview.backgroundColor = .clear
-//                tickview.animateTickDrawing(hasText: text.count == 0 ? false : true)
-//                
-//                hud.customView = tickview
-//            } else {
-//                hud.customView = UIImageView(image: UIImage(named: imageName))
-//            }
-//            
-//            hud.label.text = text;
-//            
-//            if autoHideAfterDelay > 0 {
-//                hud.hide(animated: true, afterDelay: autoHideAfterDelay)
-//                
-//                let delayInSeconds: Double = autoHideAfterDelay // Delay for 2 seconds
-//                let dispatchTime = DispatchTime.now() + delayInSeconds
-//                
-//                DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-//                    // Code to be executed after the delay
-//                    if let completeBlock = self.completeBlock {
-//                        completeBlock()
-//                    }
-//                }
-//            }
-//        }
-//    }
+    class func getKeyWindow() -> UIWindow? {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        if let window = windowScene?.windows.first {
+            return window
+        }
+        
+        return nil
+    }
     
     class func md5(_ sourceString:String?) -> String {
         
@@ -170,11 +141,7 @@ func LS(_ key: String) -> String {
             return
         }
         
-        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
-           let temp = window.rootViewController {
-            tempRootVC = temp
-        } else {
-        }
+        tempRootVC = Tool.getRootViewController()
         
         if let tempRootVC {
             tempRootVC.present(alert, animated: true, completion: nil)
@@ -480,24 +447,6 @@ func LS(_ key: String) -> String {
 //MARK: -
 extension UIColor {
     
-    //color
-    static let textHighlightColor = UIColor(red: 0.34, green: 0.366, blue: 0.983, alpha: 1) //#575dfa
-    static let navigationBarColor = UIColor(red:0.98, green:0.26, blue:0.59, alpha:1)
-    static let navigationBarTitleColor = UIColor.white;
-    static let tableViewCellSelectedColor = UIColor(red: 0, green: 0, blue: 1.0, alpha: 1.0)
-    static let mainTextColor = UIColor(red:0.52, green:0.14, blue:0.91, alpha:1)
-    static let mainTextColor2 = UIColor.color("#002986")
-    static let subTitleColor = UIColor(red:0.72, green:0.56, blue:0.98, alpha:1)
-    static let defaultImageColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1)
-    static let settingsTextColor = UIColor(red:0.52, green:0.14, blue:0.91, alpha:1)
-    static let inputBorderNormalColor = UIColor.color("#006ff9") //green: "#26a057", blue:"#196ae5", red:"#ff0000"
-    static let inputBorderErrorColor = UIColor.color("#ff0000")
-    
-    static let buttonEnabledColor = UIColor.color("#575dfa")
-    static let buttonDisabledColor = UIColor.color("#575dfa").withAlphaComponent(0.5)
-    
-    static let tickColor = UIColor.color("#4b4c4e")
-    
     static let successToastSecondaryColor = UIColor(red: 233/255.0, green: 244/255.0, blue: 232/255.0, alpha: 1)
     static let warningToastSecondaryColor = UIColor(red: 253/255.0, green: 241/255.0, blue: 221/255.0, alpha: 1)
     static let errorToastSecondaryColor = UIColor(red: 247/255.0, green: 228/255.0, blue: 221/255.0, alpha: 1)
@@ -507,58 +456,6 @@ extension UIColor {
     static let warningToastPrimaryColor = UIColor(red: 244/255.0, green: 186/255.0, blue: 97/255.0, alpha: 1)
     static let errorToastPrimaryColor = UIColor(red: 239/255.0, green: 143/255.0, blue: 108/255.0, alpha: 1)
     static let infoToastPrimaryColor = UIColor(red: 116/255.0, green: 170/255.0, blue: 232/255.0, alpha: 1)
-    
-    static let helpCenterDefault = UIColor.color("#0062f9")
-    
-    class func color(_ hexString:String) -> UIColor {
-        
-        //var hexString:NSString = NSString(string: hexString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).uppercased())
-        
-        var hexString: NSString = NSString(string: hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased())
-        
-        // String should be 6 or 8 characters
-        if hexString.length < 6 {
-            return UIColor.clear
-        }
-        
-        // strip 0X if it appears
-        if hexString.hasPrefix("0X") || hexString.hasPrefix("0x"){
-            hexString = hexString.substring(from: 2) as NSString
-        }
-        if hexString.hasPrefix("#") {
-            hexString = hexString.substring(from: 1) as NSString
-        }
-        if hexString.length != 6 {
-            return UIColor.clear
-        }
-        
-        // Separate into r, g, b substrings
-        var range = NSRange.init(location: 0, length: 2)
-        
-        //r
-        let rString = hexString.substring(with: range)
-        
-        //g
-        range.location = 2;
-        let gString = hexString.substring(with: range)
-        
-        //b
-        range.location = 4;
-        let bString = hexString.substring(with: range)
-        
-        // Scan values
-        var r, g, b: UInt32
-        r = 0; g = 0; b = 0
-        
-        Scanner.init(string: rString).scanHexInt32(&r);
-        Scanner.init(string: gString).scanHexInt32(&g);
-        Scanner.init(string: bString).scanHexInt32(&b);
-        
-        
-        return UIColor(red: CGFloat(Double(r)/255.0), green: CGFloat(Double(g)/255.0), blue: CGFloat(Double(b)/255.0), alpha: 1.0)
-    }
-    
-    
 }
 
 //MARK: -
@@ -613,170 +510,6 @@ extension UIImage {
         
     }
     
-    func resize(targetSize: CGSize) -> UIImage {
-        //        let scaleFactor = max(targetSize.width / self.size.width, targetSize.height / self.size.height)
-        //        let scaledSize = CGSize(width: self.size.width * scaleFactor, height: self.size.height * scaleFactor)
-        //
-        //        let renderer = UIGraphicsImageRenderer(size: targetSize)
-        //        let resizedImage = renderer.image { context in
-        //            self.draw(in: CGRect(origin: .zero, size: scaledSize))
-        //        }
-        //
-        //        return resizedImage
-        
-        // Determine the scale factor to fit the image within the target size
-        let widthRatio = targetSize.width / size.width
-        let heightRatio = targetSize.height / size.height
-        let scaleFactor = min(widthRatio, heightRatio)
-        
-        // Calculate the new size with the aspect ratio maintained
-        let newSize = CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor)
-        
-        // Create a graphics context and draw the image with the new size
-        UIGraphicsBeginImageContextWithOptions(newSize, true, 0.0)
-        self.draw(in: CGRect(origin: CGPoint.zero, size: newSize))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        // Return the resized image
-        return newImage!
-    }
-    
-    
-    
-    func scaledToWidth(width: CGFloat) -> UIImage? {
-        let oldWidth = self.size.width
-        let scaleFactor = width / oldWidth
-        
-        let newHeight = self.size.height * scaleFactor
-        let newWidth = oldWidth * scaleFactor
-        
-        UIGraphicsBeginImageContext(CGSize(width:newWidth, height:newHeight))
-        self.draw(in: CGRect(x:0, y:0, width:newWidth, height:newHeight))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage!
-    }
-    
-    func clipImageSize(offset:CGPoint, newSize: CGSize) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        
-        let origin = CGPoint(x: offset.x,
-                             y: offset.y)
-        
-        self.draw(at: origin)
-        
-        let clippedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return clippedImage
-    }
-    
-    //    func rotate(radians: Double) -> UIImage? {
-    //        var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
-    //        // Trim off the extremely small float value to prevent core graphics from rounding it up
-    //        newSize.width = floor(newSize.width)
-    //        newSize.height = floor(newSize.height)
-    //
-    //        UIGraphicsBeginImageContextWithOptions(newSize, true, self.scale)
-    //        let context = UIGraphicsGetCurrentContext()!
-    //        context.clear(CGRect(x:0, y:0, width: newSize.width, height: newSize.height))
-    //        context.setFillColor(UIColor.white.cgColor)
-    //        context.fill(CGRect(x:0, y:0, width: newSize.width, height: newSize.height))
-    //        // Move origin to middle
-    //        context.translateBy(x: newSize.width/2, y: newSize.height/2)
-    //        // Rotate around middle
-    //        context.rotate(by: CGFloat(radians))
-    //        // Draw the image at its center
-    //        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
-    //
-    //        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-    //        UIGraphicsEndImageContext()
-    //
-    //        return newImage
-    //    }
-    
-    func rotate(_ radians: CGFloat) -> UIImage {
-        let cgImage = self.cgImage!
-        let LARGEST_SIZE = CGFloat(max(self.size.width, self.size.height))
-        let context = CGContext.init(data: nil, width:Int(LARGEST_SIZE), height:Int(LARGEST_SIZE), bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0, space: cgImage.colorSpace!, bitmapInfo: cgImage.bitmapInfo.rawValue)!
-        
-        var drawRect = CGRect.zero
-        drawRect.size = self.size
-        let drawOrigin = CGPoint(x: (LARGEST_SIZE - self.size.width) * 0.5,y: (LARGEST_SIZE - self.size.height) * 0.5)
-        drawRect.origin = drawOrigin
-        var tf = CGAffineTransform.identity
-        tf = tf.translatedBy(x: LARGEST_SIZE * 0.5, y: LARGEST_SIZE * 0.5)
-        tf = tf.rotated(by: CGFloat(radians))
-        tf = tf.translatedBy(x: LARGEST_SIZE * -0.5, y: LARGEST_SIZE * -0.5)
-        context.concatenate(tf)
-        context.draw(cgImage, in: drawRect)
-        var rotatedImage = context.makeImage()!
-        
-        drawRect = drawRect.applying(tf)
-        
-        rotatedImage = rotatedImage.cropping(to: drawRect)!
-        let resultImage = UIImage(cgImage: rotatedImage)
-        return resultImage
-    }
-    
-    func fixOrientation() -> UIImage {
-        
-        // No-op if the orientation is already correct
-        if ( self.imageOrientation == UIImage.Orientation.up ) {
-            return self;
-        }
-        
-        // We need to calculate the proper transformation to make the image upright.
-        // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-        var transform: CGAffineTransform = CGAffineTransform.identity
-        
-        if ( self.imageOrientation == UIImage.Orientation.down || self.imageOrientation == UIImage.Orientation.downMirrored ) {
-            transform = transform.translatedBy(x: self.size.width, y: self.size.height)
-            transform = transform.rotated(by: CGFloat(Double.pi))
-        }
-        
-        if ( self.imageOrientation == UIImage.Orientation.left || self.imageOrientation == UIImage.Orientation.leftMirrored ) {
-            transform = transform.translatedBy(x: self.size.width, y: 0)
-            transform = transform.rotated(by: CGFloat(Double.pi / 2.0))
-        }
-        
-        if ( self.imageOrientation == UIImage.Orientation.right || self.imageOrientation == UIImage.Orientation.rightMirrored ) {
-            transform = transform.translatedBy(x: 0, y: self.size.height);
-            transform = transform.rotated(by: CGFloat(-Double.pi / 2.0));
-        }
-        
-        if ( self.imageOrientation == UIImage.Orientation.upMirrored || self.imageOrientation == UIImage.Orientation.downMirrored ) {
-            transform = transform.translatedBy(x: self.size.width, y: 0)
-            transform = transform.scaledBy(x: -1, y: 1)
-        }
-        
-        if ( self.imageOrientation == UIImage.Orientation.leftMirrored || self.imageOrientation == UIImage.Orientation.rightMirrored ) {
-            transform = transform.translatedBy(x: self.size.height, y: 0);
-            transform = transform.scaledBy(x: -1, y: 1);
-        }
-        
-        // Now we draw the underlying CGImage into a new context, applying the transform
-        // calculated above.
-        let ctx: CGContext = CGContext(data: nil, width: Int(self.size.width), height: Int(self.size.height),
-                                       bitsPerComponent: self.cgImage!.bitsPerComponent, bytesPerRow: 0,
-                                       space: self.cgImage!.colorSpace!,
-                                       bitmapInfo: self.cgImage!.bitmapInfo.rawValue)!;
-        
-        ctx.concatenate(transform)
-        
-        if ( self.imageOrientation == UIImage.Orientation.left ||
-             self.imageOrientation == UIImage.Orientation.leftMirrored ||
-             self.imageOrientation == UIImage.Orientation.right ||
-             self.imageOrientation == UIImage.Orientation.rightMirrored ) {
-            ctx.draw(self.cgImage!, in: CGRect(x: 0,y: 0,width: self.size.height,height: self.size.width))
-        } else {
-            ctx.draw(self.cgImage!, in: CGRect(x: 0,y: 0,width: self.size.width,height: self.size.height))
-        }
-        
-        // And now we just create a new UIImage from the drawing context and return it
-        return UIImage(cgImage: ctx.makeImage()!)
-    }
 }
 
 //MARK: -
